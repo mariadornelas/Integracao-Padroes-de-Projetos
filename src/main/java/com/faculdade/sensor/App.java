@@ -1,11 +1,5 @@
 package com.faculdade.sensor;
 
-/**
- * Cliente de demonstração. Observe que, do início ao fim, este código só
- * conhece {@link GerenciadorSensores} (Singleton) e as abstrações
- * {@link FabricaSensores}, {@link SensorTemperatura} e
- * {@link SensorPressao} — nunca uma classe concreta.
- */
 public class App {
 
     public static void main(String[] args) {
