@@ -1,0 +1,83 @@
+@startuml diagrama-uml
+
+title Singleton + Abstract Factory + Factory Method - Monitoramento de Sensores
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class GerenciadorSensores <<Singleton>> {
+  - {static} INSTANCIA: GerenciadorSensores
+  - fabricasEmCache: Map<String, FabricaSensores>
+  - GerenciadorSensores()
+  + {static} getInstance(): GerenciadorSensores
+  + obterFabrica(ambiente: String): FabricaSensores
+  - resolverFabricaPorReflexao(ambiente: String): FabricaSensores
+}
+
+abstract class FabricaSensores <<Abstract Factory / Abstract Creator>> {
+  + {abstract} criarSensorTemperatura(): SensorTemperatura
+  + {abstract} criarSensorPressao(): SensorPressao
+  + diagnosticar(valorTemperatura: double, valorPressao: double): String
+}
+
+class FabricaSensoresInterno <<Concrete Factory>> {
+  + criarSensorTemperatura(): SensorTemperatura
+  + criarSensorPressao(): SensorPressao
+}
+
+class FabricaSensoresExterno <<Concrete Factory>> {
+  + criarSensorTemperatura(): SensorTemperatura
+  + criarSensorPressao(): SensorPressao
+}
+
+interface SensorTemperatura <<Abstract Product A>> {
+  + ler(valorMedido: double): String
+}
+
+interface SensorPressao <<Abstract Product B>> {
+  + ler(valorMedido: double): String
+}
+
+class SensorTemperaturaInterno <<Concrete Product A1>>
+class SensorTemperaturaExterno <<Concrete Product A2>>
+class SensorPressaoInterno <<Concrete Product B1>>
+class SensorPressaoExterno <<Concrete Product B2>>
+
+class App <<Cliente>> {
+  + {static} main(args: String[]): void
+}
+
+GerenciadorSensores ..> FabricaSensores : resolve via reflection >
+FabricaSensores <|-- FabricaSensoresInterno
+FabricaSensores <|-- FabricaSensoresExterno
+
+SensorTemperatura <|.. SensorTemperaturaInterno
+SensorTemperatura <|.. SensorTemperaturaExterno
+SensorPressao <|.. SensorPressaoInterno
+SensorPressao <|.. SensorPressaoExterno
+
+FabricaSensoresInterno ..> SensorTemperaturaInterno : cria
+FabricaSensoresInterno ..> SensorPressaoInterno : cria
+FabricaSensoresExterno ..> SensorTemperaturaExterno : cria
+FabricaSensoresExterno ..> SensorPressaoExterno : cria
+
+App ..> GerenciadorSensores : usa (único ponto de acesso)
+
+note top of GerenciadorSensores
+  **Singleton**
+  Único ponto de acesso.
+  Guarda em cache uma
+  fábrica por ambiente já
+  resolvida por Reflection.
+end note
+
+note right of FabricaSensores
+  **Abstract Factory** garante
+  consistência de família.
+  Os dois métodos de criação
+  são **Factory Methods**:
+  abstratos aqui, implementados
+  só nas subclasses concretas.
+end note
+
+@enduml
