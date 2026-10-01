@@ -1,6 +1,5 @@
 package com.faculdade.sensor;
 
-/** Concrete Product A2 — ambiente exposto ao tempo, mais tolerante. */
 public class SensorTemperaturaExterno implements SensorTemperatura {
 
     private static final double LIMITE_ALERTA = 80.0;

@@ -1,6 +1,5 @@
 package com.faculdade.sensor;
 
-/** Concrete Product A1 — ambiente controlado, limiares mais apertados. */
 public class SensorTemperaturaInterno implements SensorTemperatura {
 
     private static final double LIMITE_ALERTA = 60.0;
