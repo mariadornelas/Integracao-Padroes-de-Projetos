@@ -4,21 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Prova, em código, os três padrões ao mesmo tempo:
- *
- * <ul>
- *   <li><b>Singleton</b>: {@code getInstance()} sempre devolve a mesma
- *   referência.</li>
- *   <li><b>Factory Method / Abstract Factory por Reflection</b>: pedir uma
- *   família inexistente lança exceção; pedir a mesma família duas vezes
- *   devolve a mesma instância de fábrica (cache); famílias diferentes
- *   produzem instâncias diferentes.</li>
- *   <li><b>Desacoplamento</b>: o código cliente só depende de
- *   {@link GerenciadorSensores} e {@link FabricaSensores} — nunca de uma
- *   classe concreta.</li>
- * </ul>
- */
 class GerenciadorSensoresTest {
 
     @Test
@@ -72,8 +57,7 @@ class GerenciadorSensoresTest {
 
     @Test
     void codigoClienteDeveFuncionarConhecendoApenasAsAbstracoes() {
-        // Este teste só enxerga GerenciadorSensores e FabricaSensores —
-        // prova de que o cliente nunca precisa de "new FabricaSensoresX()".
+
         GerenciadorSensores gerenciador = GerenciadorSensores.getInstance();
 
         for (String ambiente : new String[] { "Interno", "Externo" }) {
